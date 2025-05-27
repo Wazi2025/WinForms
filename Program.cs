@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.DirectoryServices;
 using Microsoft.Data.SqlClient;
 
 
@@ -16,16 +18,48 @@ static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         Application.Run(new Form1());
+
+        //SQLInitialize();
+
+        //Set connection string, instantiate DB object and open DB connection
+        string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
+        using SqlConnection conn = new SqlConnection(connectionString);
+        conn.Open();
     }
 
-    static public string SQLAction()
+    static private void SQLInitialize()
     {
-        //rtbDataWindow.Clear();
-
+        //Set connection string, instantiate DB object and open DB connection
         string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
-
         using SqlConnection conn = new SqlConnection(connectionString);
+        conn.Open();
 
+        //return conn;
+    }
+    static public void SQLInsert(List<string> data)
+    {
+        //Set connection string, instantiate DB object and open DB connection
+        string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
+        using SqlConnection conn = new SqlConnection(connectionString);
+        conn.Open();
+
+        //string result = "";
+        string insertQuery = "INSERT INTO person (first_name, last_name, email) VALUES (@f_name, @l_name, @email)";
+        using var insert = new SqlCommand(insertQuery, conn);
+
+        insert.Parameters.AddWithValue("@f_name", data[0]);
+        insert.Parameters.AddWithValue("@l_name", data[1]);
+        insert.Parameters.AddWithValue("@email", data[2]);
+
+        insert.ExecuteNonQuery();
+        //return result;
+    }
+
+    static public string SQLSelect()
+    {
+        //Set connection string, instantiate DB object and open DB connection
+        string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
+        using SqlConnection conn = new SqlConnection(connectionString);
         conn.Open();
 
         string query = "SELECT * FROM person";
@@ -34,16 +68,13 @@ static class Program
         using var select = new SqlCommand(query, conn);
 
         using var reader = select.ExecuteReader();
-        string temp = "";
+        string result = "";
 
         //Read from DB using the query. Will continue until there are no more rows
         while (reader.Read())
         {
-            temp += $"{reader["person_id"]} {reader["first_name"]} {reader["last_name"]} {reader["phone"]} {reader["email"]} {reader["street"]} {reader["city"]} {reader["zip_code"]} {reader["country"]}\n";
-            //  form.rtbDataWindow.AppendText(temp);
+            result += $"{reader["person_id"]} {reader["first_name"]} {reader["last_name"]} {reader["phone"]} {reader["email"]} {reader["street"]} {reader["city"]} {reader["zip_code"]} {reader["country"]}\n";
         }
-        return temp;
-
+        return result;
     }
-
 }

@@ -2,20 +2,32 @@ namespace WinForms;
 
 public partial class Form1 : Form
 {
-
+    private TextBox tbFirstName;
+    private TextBox tbLastName;
+    private TextBox tbEmail;
     private Button btnSelect;
+    private Button btnInsert;
 
     public RichTextBox rtbDataWindow;
 
     public void Initialize()
     {
-        // tbInput = new TextBox();
-        // tbInput.Location = new System.Drawing.Point(0, 100);
-        // tbInput.ReadOnly = false;
-        // tbInput.Text = "Input box";
+        tbFirstName = new TextBox();
+        tbFirstName.Location = new System.Drawing.Point(10, 170);
 
-        // //Hook up event
-        // tbInput.KeyDown += tbInput_KeyDown;
+        tbLastName = new TextBox();
+        tbLastName.Location = new System.Drawing.Point(120, 170);
+
+        tbEmail = new TextBox();
+        tbEmail.Location = new System.Drawing.Point(230, 170);
+
+        btnInsert = new Button();
+        btnInsert.Location = new System.Drawing.Point(10, 200);
+        btnInsert.Text = "Insert";
+
+        //Hook up event
+        btnInsert.Click += new EventHandler(this.btnInsert_Click);
+
         btnSelect = new Button();
         btnSelect.Location = new System.Drawing.Point(10, 100);
         btnSelect.Text = "Select";
@@ -29,7 +41,11 @@ public partial class Form1 : Form
         //rtbDataWindow.Text = "Just a test";
 
         this.Controls.Add(btnSelect);
+        this.Controls.Add(btnInsert);
         this.Controls.Add(rtbDataWindow);
+        this.Controls.Add(tbFirstName);
+        this.Controls.Add(tbLastName);
+        this.Controls.Add(tbEmail);
     }
 
 
@@ -39,7 +55,19 @@ public partial class Form1 : Form
         //rtbDataWindow.Text = "Fetching data...";
 
         //Add query to RichTextBox component
-        rtbDataWindow.Text = Program.SQLAction();
+        rtbDataWindow.Text = Program.SQLSelect();
+    }
+
+    void btnInsert_Click(object sender, EventArgs e)
+    {
+        List<string> data = new List<string>();
+        data.Add(tbFirstName.Text);
+        data.Add(tbLastName.Text);
+        data.Add(tbEmail.Text);
+
+        //Insert SQL query here
+        Program.SQLInsert(data);
+
     }
 
     public Form1()
