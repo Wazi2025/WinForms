@@ -1,3 +1,6 @@
+using Azure.Messaging;
+using Microsoft.IdentityModel.Tokens;
+
 namespace WinForms;
 
 public partial class Form1 : Form
@@ -62,6 +65,13 @@ public partial class Form1 : Form
         data.Add(tbFirstName.Text);
         data.Add(tbLastName.Text);
         data.Add(tbEmail.Text);
+
+        if (data.Contains(""))
+        {
+
+            MessageBox.Show("Fields cannot be empty!", "Warning");
+            return;
+        }
 
         //Send TextBox values as parameters to SQLInsert method
         Program.SQLInsert(data);
