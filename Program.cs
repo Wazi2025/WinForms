@@ -1,8 +1,4 @@
-using System;
-using System.Data;
-using System.DirectoryServices;
 using Microsoft.Data.SqlClient;
-
 
 namespace WinForms;
 
@@ -19,52 +15,41 @@ static class Program
         ApplicationConfiguration.Initialize();
         Application.Run(new Form1());
 
-        //SQLInitialize();
-
-        //Set connection string, instantiate DB object and open DB connection
-        string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
-        using SqlConnection conn = new SqlConnection(connectionString);
-        conn.Open();
     }
 
-    static private void SQLInitialize()
-    {
-        //Set connection string, instantiate DB object and open DB connection
-        string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
-        using SqlConnection conn = new SqlConnection(connectionString);
-        conn.Open();
-
-        //return conn;
-    }
     static public void SQLInsert(List<string> data)
     {
         //Set connection string, instantiate DB object and open DB connection
+        //Note: Had problems with accessing SqlConnection in it's own method, will look into it later
         string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
         using SqlConnection conn = new SqlConnection(connectionString);
         conn.Open();
 
-        //string result = "";
         string insertQuery = "INSERT INTO person (first_name, last_name, email) VALUES (@f_name, @l_name, @email)";
+
+        //Instantiate SQL object with query and current connection (conn)
         using var insert = new SqlCommand(insertQuery, conn);
 
+        //Note: Prolly add some sort of validation here
         insert.Parameters.AddWithValue("@f_name", data[0]);
         insert.Parameters.AddWithValue("@l_name", data[1]);
         insert.Parameters.AddWithValue("@email", data[2]);
 
+        //Execute query
         insert.ExecuteNonQuery();
-        //return result;
     }
 
     static public string SQLSelect()
     {
         //Set connection string, instantiate DB object and open DB connection
+        //Note: Had problems with accessing SqlConnection in it's own method, will look into it later
         string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
         using SqlConnection conn = new SqlConnection(connectionString);
         conn.Open();
 
         string query = "SELECT * FROM person";
 
-        //Instantiate SQL object with query and current connection (conn) from Main()
+        //Instantiate SQL object with query and current connection (conn)
         using var select = new SqlCommand(query, conn);
 
         using var reader = select.ExecuteReader();

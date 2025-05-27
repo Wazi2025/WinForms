@@ -38,7 +38,6 @@ public partial class Form1 : Form
         rtbDataWindow = new RichTextBox();
         rtbDataWindow.Dock = DockStyle.Top;
         rtbDataWindow.ReadOnly = true;
-        //rtbDataWindow.Text = "Just a test";
 
         this.Controls.Add(btnSelect);
         this.Controls.Add(btnInsert);
@@ -51,21 +50,20 @@ public partial class Form1 : Form
 
     void btnSelect_Click(object sender, EventArgs e)
     {
-        //Button clickedButton = (Button)sender;
-        //rtbDataWindow.Text = "Fetching data...";
-
-        //Add query to RichTextBox component
+        //Add query result to RichTextBox component
         rtbDataWindow.Text = Program.SQLSelect();
     }
 
     void btnInsert_Click(object sender, EventArgs e)
     {
         List<string> data = new List<string>();
+
+        //Add values from TextBoxes to List
         data.Add(tbFirstName.Text);
         data.Add(tbLastName.Text);
         data.Add(tbEmail.Text);
 
-        //Insert SQL query here
+        //Send TextBox values as parameters to SQLInsert method
         Program.SQLInsert(data);
 
     }
