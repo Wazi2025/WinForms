@@ -25,7 +25,7 @@ static class Program
         using SqlConnection conn = new SqlConnection(connectionString);
         conn.Open();
 
-        string insertQuery = "INSERT INTO person (first_name, last_name, email) VALUES (@f_name, @l_name, @email)";
+        string insertQuery = "INSERT INTO person (first_name, last_name, phone, email, street, city, zip_code, country) VALUES (@f_name, @l_name, @phone, @email, @street, @city, @zip, @country)";
 
         //Instantiate SQL object with query and current connection (conn)
         using var insert = new SqlCommand(insertQuery, conn);
@@ -33,7 +33,12 @@ static class Program
         //Note: Prolly add some sort of validation here
         insert.Parameters.AddWithValue("@f_name", data[0]);
         insert.Parameters.AddWithValue("@l_name", data[1]);
-        insert.Parameters.AddWithValue("@email", data[2]);
+        insert.Parameters.AddWithValue("@phone", data[2]);
+        insert.Parameters.AddWithValue("@email", data[3]);
+        insert.Parameters.AddWithValue("@street", data[4]);
+        insert.Parameters.AddWithValue("@city", data[5]);
+        insert.Parameters.AddWithValue("@zip", data[6]);
+        insert.Parameters.AddWithValue("@country", data[7]);
 
         //Execute query
         insert.ExecuteNonQuery();

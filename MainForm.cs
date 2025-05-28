@@ -7,7 +7,12 @@ public partial class Form1 : Form
 {
     private TextBox tbFirstName;
     private TextBox tbLastName;
+    private TextBox tbPhone;
     private TextBox tbEmail;
+    private TextBox tbStreet;
+    private TextBox tbCity;
+    private TextBox tbZip;
+    private TextBox tbCountry;
     private Button btnSelect;
     private Button btnInsert;
 
@@ -17,7 +22,12 @@ public partial class Form1 : Form
     {
         tbFirstName = new TextBox();
         tbLastName = new TextBox();
+        tbPhone = new TextBox();
         tbEmail = new TextBox();
+        tbStreet = new TextBox();
+        tbCity = new TextBox();
+        tbZip = new TextBox();
+        tbCountry = new TextBox();
 
         btnInsert = new Button();
         btnInsert.Text = "Insert";
@@ -37,20 +47,36 @@ public partial class Form1 : Form
         rtbDataWindow.Dock = DockStyle.Top;
         rtbDataWindow.ReadOnly = true;
         rtbDataWindow.Height = 300;
-        //rtbDataWindow.Width = 400;
+        //rtbDataWindow.Width = 800;
 
         TableLayoutPanel table = new TableLayoutPanel();
-        table.RowCount = 100;
-        table.ColumnCount = 3;
+        table.RowCount = 30;
+        table.ColumnCount = 8;
         table.Dock = DockStyle.Fill;
         table.AutoSize = true;
 
+        // TableLayoutPanel viewTable = new TableLayoutPanel();
+        // //table.RowCount = 30;
+        // table.ColumnCount = 1;
+        // table.Dock = DockStyle.Fill;
+        // table.AutoSize = true;
+
         // Add controls to specific cells
         table.Controls.Add(rtbDataWindow, 0, 0);
-        table.SetColumnSpan(rtbDataWindow, 3);
+        table.SetColumnSpan(rtbDataWindow, 8);
+
+        //viewTable.Controls.Add(rtbDataWindow, 0, 0);
+        //viewTable.SetColumnSpan(rtbDataWindow, 3);
+
         table.Controls.Add(tbFirstName, 0, 10);
         table.Controls.Add(tbLastName, 1, 10);
-        table.Controls.Add(tbEmail, 2, 10);
+        table.Controls.Add(tbPhone, 2, 10);
+        table.Controls.Add(tbEmail, 3, 10);
+        table.Controls.Add(tbStreet, 4, 10);
+        table.Controls.Add(tbCity, 5, 10);
+        table.Controls.Add(tbZip, 6, 10);
+        table.Controls.Add(tbCountry, 7, 10);
+
         table.Controls.Add(btnSelect, 0, 20);
         table.Controls.Add(btnInsert, 1, 20);
 
