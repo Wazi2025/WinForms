@@ -27,6 +27,7 @@ public partial class Form1 : Form
     private Button btnInsert;
 
     public RichTextBox rtbDataWindow;
+    public ListView dataWindow;
 
     public void Initialize()
     {
@@ -91,24 +92,26 @@ public partial class Form1 : Form
         rtbDataWindow.Height = 300;
         //rtbDataWindow.Width = 800;
 
+        dataWindow = new ListView();
+        dataWindow.Dock = DockStyle.Top;
+        dataWindow.View = View.Details;
+
+        dataWindow.Height = 300;
+        dataWindow.Columns.Add("First Name");
+        dataWindow.Columns.Add("Last Name");
+        dataWindow.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
         TableLayoutPanel table = new TableLayoutPanel();
         table.RowCount = 30;
         table.ColumnCount = 8;
         table.Dock = DockStyle.Fill;
         table.AutoSize = true;
 
-        // TableLayoutPanel viewTable = new TableLayoutPanel();
-        // //table.RowCount = 30;
-        // table.ColumnCount = 1;
-        // table.Dock = DockStyle.Fill;
-        // table.AutoSize = true;
-
-        // Add controls to specific cells
-        table.Controls.Add(rtbDataWindow, 0, 0);
-        table.SetColumnSpan(rtbDataWindow, 8);
-
-        //viewTable.Controls.Add(rtbDataWindow, 0, 0);
-        //viewTable.SetColumnSpan(rtbDataWindow, 3);
+        // Add controls to specific cells in table
+        // table.Controls.Add(rtbDataWindow, 0, 0);
+        // table.SetColumnSpan(rtbDataWindow, 8);
+        table.Controls.Add(dataWindow, 0, 0);
+        table.SetColumnSpan(dataWindow, 8);
 
         table.Controls.Add(tbFirstName, 0, 10);
         table.Controls.Add(lblFirstName, 0, 5);
@@ -146,6 +149,11 @@ public partial class Form1 : Form
     {
         //Add query result to RichTextBox component
         rtbDataWindow.Text = Program.SQLSelect();
+
+        //dataWindow. = Program.SQLSelect();
+        //Program.Person = Program.SQLSelect();
+        dataWindow.Items.Add("Jon");
+        dataWindow.Items.Add("Petter");
     }
 
     void btnInsert_Click(object sender, EventArgs e)
@@ -179,7 +187,6 @@ public partial class Form1 : Form
         tbCity.Clear();
         tbZip.Clear();
         tbCountry.Clear();
-
     }
 
     public Form1()

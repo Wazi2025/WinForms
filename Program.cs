@@ -17,6 +17,18 @@ static class Program
 
     }
 
+    public class Person()
+    {
+        public string ID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string Zip { get; set; }
+        public string Country { get; set; }
+    }
     static public void SQLInsert(List<string> data)
     {
         //Set connection string, instantiate DB object and open DB connection
@@ -60,7 +72,30 @@ static class Program
         using var reader = select.ExecuteReader();
         string result = "";
 
+        // Person[] person = new Person[2];
+
+        // int i = 0;
+        // int amount = 0;
+
         //Read from DB using the query. Will continue until there are no more rows
+        // while (reader.Read())
+        // {
+        //     person[i] = new Person();
+
+        //     person[i].ID = ($"{reader["person_id"]}");
+        //     person[i].FirstName = ($"{reader["first_name"]}");
+        //     person[i].LastName = ($"{reader["last_name"]}");
+        //     person[i].Phone = ($"{reader["phone"]}");
+        //     person[i].Email = ($"{reader["email"]}");
+        //     person[i].Street = ($"{reader["street"]}");
+        //     person[i].City = ($"{reader["city"]}");
+        //     person[i].Zip = ($"{reader["zip_code"]}");
+        //     person[i].Country = ($"{reader["country"]}");
+        //     i++;
+        // }
+        // amount = i;
+        // return person[amount];
+
         while (reader.Read())
         {
             result += $"{reader["person_id"]} {reader["first_name"]} {reader["last_name"]} {reader["phone"]} {reader["email"]} {reader["street"]} {reader["city"]} {reader["zip_code"]} {reader["country"]}\n";
