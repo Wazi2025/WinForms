@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace WinForms;
 
@@ -56,7 +57,7 @@ static class Program
         insert.ExecuteNonQuery();
     }
 
-    static public string SQLSelect()
+    static public DataTable SQLSelect()
     {
         //Set connection string, instantiate DB object and open DB connection
         //Note: Had problems with accessing SqlConnection in it's own method, will look into it later
@@ -69,9 +70,18 @@ static class Program
         //Instantiate SQL object with query and current connection (conn)
         using var select = new SqlCommand(query, conn);
 
-        using var reader = select.ExecuteReader();
+        //using var reader = select.ExecuteReader();
         string result = "";
 
+
+        SqlCommand command = conn.CreateCommand();
+        command.CommandText = query;
+        SqlDataAdapter da = new SqlDataAdapter(command);
+        DataTable dataTable = new DataTable();
+        // dataTable.Load(reader);
+        da.Fill(dataTable);
+
+        return dataTable;
         // Person[] person = new Person[2];
 
         // int i = 0;
@@ -96,10 +106,10 @@ static class Program
         // amount = i;
         // return person[amount];
 
-        while (reader.Read())
-        {
-            result += $"{reader["person_id"]} {reader["first_name"]} {reader["last_name"]} {reader["phone"]} {reader["email"]} {reader["street"]} {reader["city"]} {reader["zip_code"]} {reader["country"]}\n";
-        }
-        return result;
+        // while (reader.Read())
+        // {
+        //     result += $"{reader["person_id"]} {reader["first_name"]} {reader["last_name"]} {reader["phone"]} {reader["email"]} {reader["street"]} {reader["city"]} {reader["zip_code"]} {reader["country"]}\n";
+        // }
+        // return result;
     }
 }

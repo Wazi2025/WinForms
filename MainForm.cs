@@ -1,3 +1,4 @@
+using System.Data;
 using Azure.Messaging;
 using Microsoft.IdentityModel.Tokens;
 
@@ -27,7 +28,7 @@ public partial class Form1 : Form
     private Button btnInsert;
 
     public RichTextBox rtbDataWindow;
-    public ListView dataWindow;
+    public DataGridView dataWindow;
 
     public void Initialize()
     {
@@ -92,14 +93,14 @@ public partial class Form1 : Form
         rtbDataWindow.Height = 300;
         //rtbDataWindow.Width = 800;
 
-        dataWindow = new ListView();
+        dataWindow = new DataGridView();
         dataWindow.Dock = DockStyle.Top;
-        dataWindow.View = View.Details;
+        //dataWindow.View = View.Details;
 
         dataWindow.Height = 300;
-        dataWindow.Columns.Add("First Name");
-        dataWindow.Columns.Add("Last Name");
-        dataWindow.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        // dataWindow.Columns.Add("First Name");
+        // dataWindow.Columns.Add("Last Name");
+        // dataWindow.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
         TableLayoutPanel table = new TableLayoutPanel();
         table.RowCount = 30;
@@ -148,12 +149,13 @@ public partial class Form1 : Form
     void btnSelect_Click(object sender, EventArgs e)
     {
         //Add query result to RichTextBox component
-        rtbDataWindow.Text = Program.SQLSelect();
+        //rtbDataWindow.Text = Program.SQLSelect();
+        dataWindow.DataSource = Program.SQLSelect();
 
         //dataWindow. = Program.SQLSelect();
         //Program.Person = Program.SQLSelect();
-        dataWindow.Items.Add("Jon");
-        dataWindow.Items.Add("Petter");
+        // dataWindow.Items.Add("Jon");
+        // dataWindow.Items.Add("Petter");
     }
 
     void btnInsert_Click(object sender, EventArgs e)
