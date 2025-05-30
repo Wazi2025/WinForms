@@ -35,12 +35,32 @@ public partial class Form1 : Form
         lblFirstName.AutoSize = true;
 
         lblLastName = new Label();
+        lblLastName.Text = "Last name";
+        lblLastName.AutoSize = true;
+
         lblPhone = new Label();
+        lblPhone.Text = "Phone";
+        lblPhone.AutoSize = true;
+
         lblEmail = new Label();
+        lblEmail.Text = "E-mail";
+        lblEmail.AutoSize = true;
+
         lblStreet = new Label();
+        lblStreet.Text = "Address";
+        lblStreet.AutoSize = true;
+
         lblCity = new Label();
+        lblCity.Text = "City";
+        lblCity.AutoSize = true;
+
         lblZip = new Label();
+        lblZip.Text = "Zip code";
+        lblZip.AutoSize = true;
+
         lblCountry = new Label();
+        lblCountry.Text = "Country";
+        lblCountry.AutoSize = true;
 
         tbFirstName = new TextBox();
         tbLastName = new TextBox();
@@ -94,12 +114,25 @@ public partial class Form1 : Form
         table.Controls.Add(lblFirstName, 0, 5);
 
         table.Controls.Add(tbLastName, 1, 10);
+        table.Controls.Add(lblLastName, 1, 5);
+
         table.Controls.Add(tbPhone, 2, 10);
+        table.Controls.Add(lblPhone, 2, 5);
+
         table.Controls.Add(tbEmail, 3, 10);
+        table.Controls.Add(lblEmail, 3, 5);
+
         table.Controls.Add(tbStreet, 4, 10);
+        table.Controls.Add(lblStreet, 4, 5);
+
         table.Controls.Add(tbCity, 5, 10);
+        table.Controls.Add(lblCity, 5, 5);
+
         table.Controls.Add(tbZip, 6, 10);
+        table.Controls.Add(lblZip, 6, 5);
+
         table.Controls.Add(tbCountry, 7, 10);
+        table.Controls.Add(lblCountry, 7, 5);
 
         table.Controls.Add(btnSelect, 0, 20);
         table.Controls.Add(btnInsert, 1, 20);
