@@ -5,6 +5,16 @@ namespace WinForms;
 
 public partial class Form1 : Form
 {
+    //Add fields to the Form class so we can access them directly instead of having to iterate
+    //through the Form's controls
+    private Label lblFirstName;
+    private Label lblLastName;
+    private Label lblPhone;
+    private Label lblEmail;
+    private Label lblStreet;
+    private Label lblCity;
+    private Label lblZip;
+    private Label lblCountry;
     private TextBox tbFirstName;
     private TextBox tbLastName;
     private TextBox tbPhone;
@@ -20,6 +30,18 @@ public partial class Form1 : Form
 
     public void Initialize()
     {
+        lblFirstName = new Label();
+        lblFirstName.Text = "First name";
+        lblFirstName.AutoSize = true;
+
+        lblLastName = new Label();
+        lblPhone = new Label();
+        lblEmail = new Label();
+        lblStreet = new Label();
+        lblCity = new Label();
+        lblZip = new Label();
+        lblCountry = new Label();
+
         tbFirstName = new TextBox();
         tbLastName = new TextBox();
         tbPhone = new TextBox();
@@ -69,6 +91,8 @@ public partial class Form1 : Form
         //viewTable.SetColumnSpan(rtbDataWindow, 3);
 
         table.Controls.Add(tbFirstName, 0, 10);
+        table.Controls.Add(lblFirstName, 0, 5);
+
         table.Controls.Add(tbLastName, 1, 10);
         table.Controls.Add(tbPhone, 2, 10);
         table.Controls.Add(tbEmail, 3, 10);
@@ -98,7 +122,12 @@ public partial class Form1 : Form
         //Add values from TextBoxes to List
         data.Add(tbFirstName.Text);
         data.Add(tbLastName.Text);
+        data.Add(tbPhone.Text);
         data.Add(tbEmail.Text);
+        data.Add(tbStreet.Text);
+        data.Add(tbCity.Text);
+        data.Add(tbZip.Text);
+        data.Add(tbCountry.Text);
 
         if (data.Contains(""))
         {
@@ -109,9 +138,14 @@ public partial class Form1 : Form
         //Send TextBox values as parameters to SQLInsert method
         Program.SQLInsert(data);
 
-        tbFirstName.Text = "";
-        tbLastName.Text = "";
-        tbEmail.Text = "";
+        tbFirstName.Clear();
+        tbLastName.Clear();
+        tbPhone.Clear();
+        tbEmail.Clear();
+        tbStreet.Clear();
+        tbCity.Clear();
+        tbZip.Clear();
+        tbCountry.Clear();
 
     }
 
