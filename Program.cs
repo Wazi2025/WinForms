@@ -18,18 +18,18 @@ static class Program
 
     }
 
-    public class Person()
-    {
-        public string ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string Zip { get; set; }
-        public string Country { get; set; }
-    }
+    // public class Person()
+    // {
+    //     public string ID { get; set; }
+    //     public string FirstName { get; set; }
+    //     public string LastName { get; set; }
+    //     public string Email { get; set; }
+    //     public string Phone { get; set; }
+    //     public string Street { get; set; }
+    //     public string City { get; set; }
+    //     public string Zip { get; set; }
+    //     public string Country { get; set; }
+    // }
     static public void SQLInsert(List<string> data)
     {
         //Set connection string, instantiate DB object and open DB connection
@@ -68,17 +68,17 @@ static class Program
         string query = "SELECT * FROM person";
 
         //Instantiate SQL object with query and current connection (conn)
-        using var select = new SqlCommand(query, conn);
+        //using var select = new SqlCommand(query, conn);
 
         //using var reader = select.ExecuteReader();
-        string result = "";
-
+        //string result = "";
 
         SqlCommand command = conn.CreateCommand();
         command.CommandText = query;
+
         SqlDataAdapter da = new SqlDataAdapter(command);
         DataTable dataTable = new DataTable();
-        // dataTable.Load(reader);
+
         da.Fill(dataTable);
 
         return dataTable;

@@ -148,12 +148,9 @@ public partial class Form1 : Form
 
     void btnSelect_Click(object sender, EventArgs e)
     {
-        //Add query result to RichTextBox component
-        //rtbDataWindow.Text = Program.SQLSelect();
+        //Add query result to DataSource component        
         dataWindow.DataSource = Program.SQLSelect();
 
-        //dataWindow. = Program.SQLSelect();
-        //Program.Person = Program.SQLSelect();
         // dataWindow.Items.Add("Jon");
         // dataWindow.Items.Add("Petter");
     }
