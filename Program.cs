@@ -22,12 +22,10 @@ static class Program
 
     static public void SQLInsert(List<string> data)
     {
-        //Set connection string, instantiate DB object and open DB connection        
         using SqlConnection conn = GetFreshConnection();
 
         string insertQuery = "INSERT INTO person (first_name, last_name, phone, email, street, city, zip_code, country) VALUES (@f_name, @l_name, @phone, @email, @street, @city, @zip, @country)";
 
-        //Instantiate SQL object with query and current connection (conn)        
         SqlCommand command = conn.CreateCommand();
         command.CommandText = insertQuery;
 
@@ -47,6 +45,7 @@ static class Program
 
     static public SqlConnection GetFreshConnection()
     {
+        //Set connection string and open DB connection
         var conn = new SqlConnection(connectionString);
         conn.Open();
         return conn;
@@ -54,7 +53,7 @@ static class Program
 
     static public DataTable SQLSelect()
     {
-        //Set connection string, instantiate DB object and open DB connection        
+        //By using the 'using' statement we make sure the DB connection is closed down after each use
         using SqlConnection conn = GetFreshConnection();
 
         //Note: Make sure we’re not building queries with user input directly(e.g., string concatenation), and instead always use parameterized queries like:
