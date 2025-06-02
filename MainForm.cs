@@ -90,23 +90,25 @@ public partial class Form1 : Form
         rtbDataWindow = new RichTextBox();
         rtbDataWindow.Dock = DockStyle.Top;
         rtbDataWindow.ReadOnly = true;
-        rtbDataWindow.Height = 300;
+        //rtbDataWindow.Height = 300;
         //rtbDataWindow.Width = 800;
 
         dataWindow = new DataGridView();
         dataWindow.Dock = DockStyle.Top;
+        dataWindow.AutoSize = true;
         //dataWindow.View = View.Details;
 
-        dataWindow.Height = 300;
+        //dataWindow.Height = 300;
+
         // dataWindow.Columns.Add("First Name");
         // dataWindow.Columns.Add("Last Name");
         // dataWindow.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
         TableLayoutPanel table = new TableLayoutPanel();
-        table.RowCount = 30;
-        table.ColumnCount = 8;
+        // table.RowCount = 30;
+        // table.ColumnCount = 8;
         table.Dock = DockStyle.Fill;
-        table.AutoSize = true;
+        //table.AutoSize = true;
 
         // Add controls to specific cells in table
         // table.Controls.Add(rtbDataWindow, 0, 0);
@@ -141,8 +143,11 @@ public partial class Form1 : Form
         table.Controls.Add(btnSelect, 0, 20);
         table.Controls.Add(btnInsert, 1, 20);
 
+        table.AutoSize = true;
+
         // Add to form
         this.Controls.Add(table);
+        //this.AutoSize = true;
     }
 
 
@@ -195,6 +200,7 @@ public partial class Form1 : Form
         this.Text = "Main";
         this.Size = new System.Drawing.Size(900, 500);
         this.StartPosition = FormStartPosition.CenterScreen;
+        this.AutoSize = true;
 
         Initialize();
     }
