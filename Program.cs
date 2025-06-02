@@ -5,6 +5,8 @@ namespace WinForms;
 
 static class Program
 {
+    static private readonly string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
+
     /// <summary>
     ///  The main entry point for the application.
     /// </summary>
@@ -15,63 +17,50 @@ static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         Application.Run(new Form1());
-
     }
 
-    // public class Person()
-    // {
-    //     public string ID { get; set; }
-    //     public string FirstName { get; set; }
-    //     public string LastName { get; set; }
-    //     public string Email { get; set; }
-    //     public string Phone { get; set; }
-    //     public string Street { get; set; }
-    //     public string City { get; set; }
-    //     public string Zip { get; set; }
-    //     public string Country { get; set; }
-    // }
+
     static public void SQLInsert(List<string> data)
     {
-        //Set connection string, instantiate DB object and open DB connection
-        //Note: Had problems with accessing SqlConnection in it's own method, will look into it later
-        string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
-        using SqlConnection conn = new SqlConnection(connectionString);
-        conn.Open();
+        //Set connection string, instantiate DB object and open DB connection        
+        using SqlConnection conn = GetFreshConnection();
 
         string insertQuery = "INSERT INTO person (first_name, last_name, phone, email, street, city, zip_code, country) VALUES (@f_name, @l_name, @phone, @email, @street, @city, @zip, @country)";
 
-        //Instantiate SQL object with query and current connection (conn)
-        using var insert = new SqlCommand(insertQuery, conn);
+        //Instantiate SQL object with query and current connection (conn)        
+        SqlCommand command = conn.CreateCommand();
+        command.CommandText = insertQuery;
 
         //Note: Prolly add some sort of validation here
-        insert.Parameters.AddWithValue("@f_name", data[0]);
-        insert.Parameters.AddWithValue("@l_name", data[1]);
-        insert.Parameters.AddWithValue("@phone", data[2]);
-        insert.Parameters.AddWithValue("@email", data[3]);
-        insert.Parameters.AddWithValue("@street", data[4]);
-        insert.Parameters.AddWithValue("@city", data[5]);
-        insert.Parameters.AddWithValue("@zip", data[6]);
-        insert.Parameters.AddWithValue("@country", data[7]);
+        command.Parameters.AddWithValue("@f_name", data[0]);
+        command.Parameters.AddWithValue("@l_name", data[1]);
+        command.Parameters.AddWithValue("@phone", data[2]);
+        command.Parameters.AddWithValue("@email", data[3]);
+        command.Parameters.AddWithValue("@street", data[4]);
+        command.Parameters.AddWithValue("@city", data[5]);
+        command.Parameters.AddWithValue("@zip", data[6]);
+        command.Parameters.AddWithValue("@country", data[7]);
 
         //Execute query
-        insert.ExecuteNonQuery();
+        command.ExecuteNonQuery();
+    }
+
+    static public SqlConnection GetFreshConnection()
+    {
+        var conn = new SqlConnection(connectionString);
+        conn.Open();
+        return conn;
     }
 
     static public DataTable SQLSelect()
     {
-        //Set connection string, instantiate DB object and open DB connection
-        //Note: Had problems with accessing SqlConnection in it's own method, will look into it later
-        string connectionString = "Server=localhost\\SQLEXPRESS;Database=TestDB;Trusted_Connection=True;TrustServerCertificate=true";
-        using SqlConnection conn = new SqlConnection(connectionString);
-        conn.Open();
+        //Set connection string, instantiate DB object and open DB connection        
+        using SqlConnection conn = GetFreshConnection();
 
+        //Note: Make sure we’re not building queries with user input directly(e.g., string concatenation), and instead always use parameterized queries like:
+        //command.CommandText = "SELECT * FROM person WHERE first_name = @firstName";
+        //command.Parameters.AddWithValue("@firstName", userInput);
         string query = "SELECT * FROM person";
-
-        //Instantiate SQL object with query and current connection (conn)
-        //using var select = new SqlCommand(query, conn);
-
-        //using var reader = select.ExecuteReader();
-        //string result = "";
 
         SqlCommand command = conn.CreateCommand();
         command.CommandText = query;
@@ -82,34 +71,5 @@ static class Program
         da.Fill(dataTable);
 
         return dataTable;
-        // Person[] person = new Person[2];
-
-        // int i = 0;
-        // int amount = 0;
-
-        //Read from DB using the query. Will continue until there are no more rows
-        // while (reader.Read())
-        // {
-        //     person[i] = new Person();
-
-        //     person[i].ID = ($"{reader["person_id"]}");
-        //     person[i].FirstName = ($"{reader["first_name"]}");
-        //     person[i].LastName = ($"{reader["last_name"]}");
-        //     person[i].Phone = ($"{reader["phone"]}");
-        //     person[i].Email = ($"{reader["email"]}");
-        //     person[i].Street = ($"{reader["street"]}");
-        //     person[i].City = ($"{reader["city"]}");
-        //     person[i].Zip = ($"{reader["zip_code"]}");
-        //     person[i].Country = ($"{reader["country"]}");
-        //     i++;
-        // }
-        // amount = i;
-        // return person[amount];
-
-        // while (reader.Read())
-        // {
-        //     result += $"{reader["person_id"]} {reader["first_name"]} {reader["last_name"]} {reader["phone"]} {reader["email"]} {reader["street"]} {reader["city"]} {reader["zip_code"]} {reader["country"]}\n";
-        // }
-        // return result;
     }
 }
