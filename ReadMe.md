@@ -3,4 +3,4 @@ It is a bit rough around the edges for the time being (notably the comments), bu
 
 Of course this application won't work unless you have access to a copy of the DB used. Enclosed you will find TestDB.sql which you can use in SSMS to re-create the DB.
 
-This will a part of my "CLI to Winforms in VS Code" series in order to show what I (hopefully) can be capable of.
+This will be a part of my "CLI to Winforms in VS Code" series in order to (hopefully) show my continued understanding of Winforms.
