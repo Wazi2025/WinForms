@@ -1,4 +1,5 @@
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
 
 namespace WinForms;
@@ -51,18 +52,22 @@ static class Program
         return conn;
     }
 
-    static public DataTable SQLSelect()
+    static public DataTable SQLSelect(string whereText)
     {
         //By using the 'using' statement we make sure the DB connection is closed down after each use
         using SqlConnection conn = GetFreshConnection();
-
+        string query;
         //Note: Make sure we’re not building queries with user input directly(e.g., string concatenation), and instead always use parameterized queries like:
         //command.CommandText = "SELECT * FROM person WHERE first_name = @firstName";
         //command.Parameters.AddWithValue("@firstName", userInput);
-        string query = "SELECT * FROM person";
+        if (whereText.IsNullOrEmpty())
+            query = "SELECT * FROM person";
+        else
+            query = "SELECT * FROM person WHERE first_name = @firstName";
 
         SqlCommand command = conn.CreateCommand();
         command.CommandText = query;
+        command.Parameters.AddWithValue("@firstName", whereText);
 
         SqlDataAdapter da = new SqlDataAdapter(command);
         DataTable dataTable = new DataTable();

@@ -26,8 +26,10 @@ public partial class Form1 : Form
     private TextBox tbCountry;
     private Button btnSelect;
     private Button btnInsert;
+    private TextBox tbWhere;
+    //private GroupBox gbInsert;
 
-    public RichTextBox rtbDataWindow;
+    //public RichTextBox rtbDataWindow;
     public DataGridView dataWindow;
 
     public void Initialize()
@@ -77,6 +79,19 @@ public partial class Form1 : Form
         btnInsert.Text = "Insert";
         btnInsert.AutoSize = true;
 
+        // gbInsert = new GroupBox();
+        // gbInsert.Text = " Insert ";
+        // gbInsert.FlatStyle = FlatStyle.Flat;
+        // gbInsert.Controls.Add(btnInsert);
+        // gbInsert.Controls.Add(tbFirstName);
+        // gbInsert.Controls.Add(tbLastName);
+        // gbInsert.Controls.Add(tbPhone);
+        // gbInsert.Controls.Add(tbEmail);
+        // gbInsert.Controls.Add(tbStreet);
+        // gbInsert.Controls.Add(tbCity);
+        // gbInsert.Controls.Add(tbZip);
+        // gbInsert.Controls.Add(tbCountry);
+
         //Hook up event
         btnInsert.Click += new EventHandler(this.btnInsert_Click);
 
@@ -84,35 +99,20 @@ public partial class Form1 : Form
         btnSelect.Text = "Select";
         btnSelect.AutoSize = true;
 
+        tbWhere = new TextBox();
+
         //Hook up event
         btnSelect.Click += new EventHandler(this.btnSelect_Click);
-
-        rtbDataWindow = new RichTextBox();
-        rtbDataWindow.Dock = DockStyle.Top;
-        rtbDataWindow.ReadOnly = true;
-        //rtbDataWindow.Height = 300;
-        //rtbDataWindow.Width = 800;
 
         dataWindow = new DataGridView();
         dataWindow.Dock = DockStyle.Top;
         dataWindow.AutoSize = true;
-        //dataWindow.View = View.Details;
-
-        //dataWindow.Height = 300;
-
-        // dataWindow.Columns.Add("First Name");
-        // dataWindow.Columns.Add("Last Name");
-        // dataWindow.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
         TableLayoutPanel table = new TableLayoutPanel();
-        // table.RowCount = 30;
-        // table.ColumnCount = 8;
-        table.Dock = DockStyle.Fill;
-        //table.AutoSize = true;
 
-        // Add controls to specific cells in table
-        // table.Controls.Add(rtbDataWindow, 0, 0);
-        // table.SetColumnSpan(rtbDataWindow, 8);
+        table.Dock = DockStyle.Fill;
+        //table.RowCount = 40;
+
         table.Controls.Add(dataWindow, 0, 0);
         table.SetColumnSpan(dataWindow, 8);
 
@@ -140,21 +140,26 @@ public partial class Form1 : Form
         table.Controls.Add(tbCountry, 7, 10);
         table.Controls.Add(lblCountry, 7, 5);
 
-        table.Controls.Add(btnSelect, 0, 20);
-        table.Controls.Add(btnInsert, 1, 20);
+        table.Controls.Add(btnSelect, 0, 30);
+        table.Controls.Add(tbWhere, 1, 30);
+
+        table.Controls.Add(btnInsert, 0, 20);
+
+        //table.Controls.Add(gbInsert, 1, 20);
 
         table.AutoSize = true;
 
         // Add to form
         this.Controls.Add(table);
-        //this.AutoSize = true;
     }
 
 
     void btnSelect_Click(object sender, EventArgs e)
     {
         //Add query result to DataSource component        
-        dataWindow.DataSource = Program.SQLSelect();
+        //string whereText = tbWhere.Text;
+
+        dataWindow.DataSource = Program.SQLSelect(tbWhere.Text);
 
         // dataWindow.Items.Add("Jon");
         // dataWindow.Items.Add("Petter");
